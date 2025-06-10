@@ -1,0 +1,20 @@
+# Terraform state
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+
+# Sensitive variable definitions
+*.tfvars
+
+# Terraform plugin/cache directory
+.terraform/
+
+# PEM keys or SSH credentials
+*.pem
+
+# OS-specific
+.DS_Store
+
+# IDE/editor config
+.vscode/

@@ -1,0 +1,4 @@
+my_ip_cidr = "your_public_ip/32"
+db_name     = "database_name"
+db_username = "your_username"
+db_password = "your_db_password"
