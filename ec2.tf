@@ -35,6 +35,14 @@ resource "aws_instance" "et-web" {
               DATABASE_URI=postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.mypostgres.address}:${aws_db_instance.mypostgres.port}/${var.db_name}
               EOT
 
+              # Only run init_db.py if tables haven't been created
+              python3 -c "from app import db, app; \
+              with app.app_context(): \
+                  from sqlalchemy import inspect; \
+                  inspector = inspect(db.engine); \
+                  tables = inspector.get_table_names(); \
+                  exit(0) if tables else exit(1)" || python3 init_db.py
+
               # Start Flask app with Gunicorn behind Nginx (assuming Gunicorn installed via requirements.txt)
               nohup gunicorn -b 127.0.0.1:5000 app:app > gunicorn.log 2>&1 &
 
